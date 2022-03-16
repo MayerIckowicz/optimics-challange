@@ -97,8 +97,11 @@ export class Reservation extends TimestampedModel {
       const foundReservationsSince = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-          until__gt: inst.since,
-          since__lt: inst.until,
+          // until__gt: inst.since,
+          //since__lt: inst.until,
+
+          since__lt: value,
+          until__gt: value,
         })
         .first();
 
@@ -121,9 +124,11 @@ export class Reservation extends TimestampedModel {
       const foundReservationsUntil = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-         
-          until__gt: inst.since,
-          since__lt: inst.until,
+          // until__gt: inst.since,
+          // since__lt: inst.until,
+
+          until__gt: value,
+          since__lt: value,
         })
         .first();
 
@@ -132,6 +137,7 @@ export class Reservation extends TimestampedModel {
         throw new ReservationOverlaps(inst, fieldName);
       }
       console.log(inst, "inst");
+      console.log(value, "VALUE");
     },
   });
 }
