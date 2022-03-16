@@ -121,8 +121,7 @@ export class Reservation extends TimestampedModel {
       const foundReservationsUntil = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-          // if until is greater then inst.since and at the same time
-          // since is lesser then the inst.until, that means that we have an overlap
+         
           until__gt: inst.since,
           since__lt: inst.until,
         })
