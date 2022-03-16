@@ -7,9 +7,6 @@ import {
   ForeignKey,
   PositiveIntegerField,
 } from "djorm/fields/index.js";
-//import { setupCommonApi } from "../__jest__/api.js";
-
-//const API_ENDPOINT = setupCommonApi();
 
 class TimestampedModel extends DatabaseModel {
   static id = new PositiveIntegerField();
@@ -97,8 +94,6 @@ export class Reservation extends TimestampedModel {
       const foundReservationsSince = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-          // until__gt: inst.since,
-          //since__lt: inst.until,
 
           since__lt: value,
           until__gt: value,
@@ -124,8 +119,6 @@ export class Reservation extends TimestampedModel {
       const foundReservationsUntil = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-          // until__gt: inst.since,
-          // since__lt: inst.until,
 
           until__gt: value,
           since__lt: value,
