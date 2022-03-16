@@ -84,53 +84,34 @@ export class Reservation extends TimestampedModel {
   });
 
   static since = new DateTimeField({
-    /*
-    validator: (value, inst, fieldName) => {
-      throw new ReservationOverlaps(inst, fieldName)
-    },
-    */
-
     validator: async (value, inst, fieldName) => {
       const foundReservationsSince = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-
           since__lt: value,
           until__gt: value,
         })
         .first();
 
       if (foundReservationsSince) {
-        console.log(foundReservationsSince, "FOUND_RES_SINCE");
         throw new ReservationOverlaps(inst, fieldName);
       }
-      console.log(inst, "instSINCE");
     },
   });
 
   static until = new DateTimeField({
-    /*
-    validator: async (value, inst, fieldName) => {
-      throw new ReservationOverlaps(inst, fieldName)
-    },
-    */
-
     validator: async (value, inst, fieldName) => {
       const foundReservationsUntil = await inst.constructor.objects
         .filter({
           petId: inst.petId,
-
           until__gt: value,
           since__lt: value,
         })
         .first();
 
       if (foundReservationsUntil) {
-        console.log(foundReservationsUntil, "FOUND_RES_UNTIL");
         throw new ReservationOverlaps(inst, fieldName);
       }
-      console.log(inst, "inst");
-      console.log(value, "VALUE");
     },
   });
 }
